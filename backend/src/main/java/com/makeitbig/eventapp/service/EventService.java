@@ -4,9 +4,9 @@ import com.makeitbig.eventapp.model.Event;
 import com.makeitbig.eventapp.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -24,5 +24,9 @@ public class EventService {
 
     public List<Event> getEventsByUser(long userId) {
         return eventRepository.findByUser(userId);
+    }
+
+    public Optional<Event> getEventsById(long eventId) {
+        return eventRepository.findById(eventId);
     }
 }
