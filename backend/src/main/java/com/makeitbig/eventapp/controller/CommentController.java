@@ -27,7 +27,7 @@ public class CommentController {
 
     @PutMapping("/id={id}")
     public Comment updateComment(Comment comment, @PathVariable long id) {
-        commentService.update(Long.valueOf(id), comment);
+        commentService.update(id, comment);
         Comment updatedComment = commentService.getById(id).orElseThrow(() -> new CommentNotFoundException("Comment with id: " + id + " doesn't exist"));
         return updatedComment;
     }
