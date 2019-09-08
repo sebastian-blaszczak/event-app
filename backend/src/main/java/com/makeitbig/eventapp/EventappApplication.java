@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EventappApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EventappApplication.class, args);
+	SpringApplication.run(EventappApplication.class, args);
 	}
 
 }
