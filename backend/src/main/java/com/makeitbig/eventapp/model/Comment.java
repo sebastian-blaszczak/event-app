@@ -20,5 +20,7 @@ public class Comment {
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
     private String description;
+    @ManyToOne
+    private Event event;
 
 }

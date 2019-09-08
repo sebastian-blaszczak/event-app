@@ -3,19 +3,23 @@ package com.makeitbig.eventapp.controller;
 import com.makeitbig.eventapp.model.User;
 import com.makeitbig.eventapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/login-user")
-    public boolean logIn(User user) {
-        userService.loadUserByUsername(user.getUserName());
-        return true;
+    public UserDetails logIn(User user) {
+       return userService.loadUserByUsername(user.getUserName());
     }
 
     @PostMapping("/signup-user")
@@ -23,6 +27,4 @@ public class UserController {
         userService.save(user);
         return user;
     }
-
-
 }

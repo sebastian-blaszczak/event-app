@@ -5,39 +5,47 @@ import com.makeitbig.eventapp.model.Event;
 import com.makeitbig.eventapp.model.User;
 import com.makeitbig.eventapp.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/user/events")
 public class EventController {
+    private final EventService eventService;
 
     @Autowired
-    EventService eventService;
+    public EventController(EventService eventService) {
+        this.eventService = eventService;
+    }
 
-    @GetMapping("/user/add-event")
+    @PostMapping("/add")
     public Event addEvent(Event event) {
         eventService.save(event);
         return event;
     }
 
-    @GetMapping("/user/event/id={eventId}")
-    public Event getEventById(@PathVariable(value = "eventId") String id) {
-        Event event = eventService.getEventsById(Long.valueOf(id)).orElseThrow(() -> new EventNotFoundException("Event with id: " + id + " doesn't exist!"));
+    @PutMapping("/id={id}")
+    public Event updateComment(Event event, @PathVariable long id) {
+        eventService.update(id, event);
+        Event updatedEvent = eventService.getById(id).orElseThrow(() -> new EventNotFoundException("Comment with id: " + id + " doesn't exist"));
+        return updatedEvent;
+    }
+
+    @GetMapping("/id={eventId}")
+    public Event getEventById(@PathVariable(value = "eventId") long id) {
+        Event event = eventService.getById(id).orElseThrow(() -> new EventNotFoundException("Event with id: " + id + " doesn't exist!"));
         eventService.save(event);
         return event;
     }
 
-    @GetMapping("/user/all-events")
+    @GetMapping("/admin/all-events")
     public List<Event> getAllEvents() {
         return eventService.getAllEvents();
     }
 
-    @PostMapping("/user")
+    @GetMapping()
     public List<Event> getEventsForLoggedUser(User user) {
-        return eventService.getEventsByUser(user.getId());
+        return eventService.getByUser(user.getId());
     }
 }
