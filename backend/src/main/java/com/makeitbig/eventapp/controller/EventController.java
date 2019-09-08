@@ -2,10 +2,12 @@ package com.makeitbig.eventapp.controller;
 
 import com.makeitbig.eventapp.exception.EventNotFoundException;
 import com.makeitbig.eventapp.model.Event;
+import com.makeitbig.eventapp.model.User;
 import com.makeitbig.eventapp.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -32,5 +34,10 @@ public class EventController {
     @GetMapping("/user/all-events")
     public List<Event> getAllEvents() {
         return eventService.getAllEvents();
+    }
+
+    @PostMapping("/user")
+    public List<Event> getEventsForLoggedUser(User user) {
+        return eventService.getEventsByUser(user.getId());
     }
 }
