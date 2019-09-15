@@ -2,27 +2,35 @@ package com.makeitbig.eventapp.service;
 
 import com.makeitbig.eventapp.exception.EventNotFoundException;
 import com.makeitbig.eventapp.model.Event;
+import com.makeitbig.eventapp.model.User;
 import com.makeitbig.eventapp.repository.EventRepository;
+import com.makeitbig.eventapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class EventService {
     private final EventRepository eventRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public EventService(EventRepository eventRepository) {
+    public EventService(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
 
-    public void save(Event event) {
+    @Transactional
+    public void save(Event event, String userName) {
+        User organizer = userRepository.findByUserName(userName);
+        event.setOrganizer(organizer);
         eventRepository.save(event);
     }
 

@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user/events")
+@CrossOrigin("*")
 public class EventController {
     private final EventService eventService;
 
@@ -22,8 +23,8 @@ public class EventController {
     }
 
     @PostMapping("/add")
-    public Event addEvent(Event event) {
-        eventService.save(event);
+    public Event addEvent(@RequestBody Event event, Authentication authentication) {
+        eventService.save(event, ((UserDetailsWrapper) authentication.getPrincipal()).getUser().getUserName());
         return event;
     }
 
@@ -37,7 +38,7 @@ public class EventController {
     @GetMapping("/id={eventId}")
     public Event getEventById(@PathVariable(value = "eventId") long id) {
         Event event = eventService.getById(id).orElseThrow(() -> new EventNotFoundException("Event with id: " + id + " doesn't exist!"));
-        eventService.save(event);
+        //eventService.save(event);
         return event;
     }
 
