@@ -4,7 +4,9 @@ import com.makeitbig.eventapp.exception.EventNotFoundException;
 import com.makeitbig.eventapp.model.Event;
 import com.makeitbig.eventapp.model.User;
 import com.makeitbig.eventapp.service.EventService;
+import com.makeitbig.eventapp.wrapper.UserDetailsWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,7 +47,7 @@ public class EventController {
     }
 
     @GetMapping()
-    public List<Event> getEventsForLoggedUser(User user) {
-        return eventService.getByUser(user.getId());
+    public List<Event> getEventsForLoggedUser(Authentication authentication) {
+        return eventService.getByUser(((UserDetailsWrapper) authentication.getPrincipal()).getUser().getId());
     }
 }
