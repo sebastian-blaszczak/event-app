@@ -1,6 +1,7 @@
 package com.makeitbig.eventapp.service;
 
 import com.makeitbig.eventapp.model.User;
+import com.makeitbig.eventapp.model.UserRole;
 import com.makeitbig.eventapp.repository.UserRepository;
 import com.makeitbig.eventapp.wrapper.UserDetailsWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class UserService implements UserDetailsService {
 
     public void save(User user) {
         PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        user.setUserRole(UserRole.USER);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }

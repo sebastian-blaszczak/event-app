@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -18,11 +19,14 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private LocalDateTime date;
+    private LocalDate date;
     private String name;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User organizer;
+    private String description;
+//    @OneToMany
+//    private List<User> participators;
     private AccesType accesType;
 }

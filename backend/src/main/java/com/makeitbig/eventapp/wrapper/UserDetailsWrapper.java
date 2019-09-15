@@ -45,6 +45,10 @@ public class UserDetailsWrapper implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isEnabled();
+        return user.isEnabled();
+    }
+
+    public User getUser() {
+        return user;
     }
 }
