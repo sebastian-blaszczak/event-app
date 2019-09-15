@@ -33,6 +33,11 @@ public class EventService {
         event.setOrganizer(organizer);
         eventRepository.save(event);
     }
+//
+//    @Transactional
+//    public void save(Event event) {
+//        eventRepository.save(event);
+//    }
 
     public List<Event> getByUser(long userId) {
         return eventRepository.findByUser(userId);
@@ -50,5 +55,13 @@ public class EventService {
         eventDB.setAccesType(event.getAccesType());
         eventRepository.save(eventDB);
         return eventDB;
+    }
+
+//    public List<Event> getEventsToParticipateByUserId(long userId) {
+//        return eventRepository.getParticipatorsByEventId(userId);
+//    }
+
+    public List<Event> getByUserToParticipate(Long userId) {
+        return eventRepository.findByUserToParticipate(userId);
     }
 }

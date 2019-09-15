@@ -67,13 +67,6 @@
         },
         methods: {
             submit() {
-                this.axios.request({
-                    url: 'http://localhost:8098/user/events',
-                    auth: {
-                        password: this.password,
-                        username: this.username
-                    }
-                })
                 window.localStorage.setItem('username', this.username)
                 window.localStorage.setItem('password', this.password)
                 this.$router.push({name: 'user-events'})

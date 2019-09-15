@@ -2,7 +2,7 @@
     <v-container grid-list-lg>
         <v-layout row>
             <v-flex xs12 class="text-xs-center display-1 font-weight-black my-5"
-                >Available Meal Plans</v-flex
+                >Available Events</v-flex
             >
         </v-layout>
         <v-layout row wrap class="meal-plans">

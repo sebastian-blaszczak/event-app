@@ -14,21 +14,6 @@
                         ></v-img>
                     </v-responsive>
 
-<!--                    <v-card-text>-->
-<!--&lt;!&ndash;                        <div class="title my-5">{{ item.recipe.label }}</div>&ndash;&gt;-->
-
-<!--                        <div class="subheading">Ingredients</div>-->
-<!--                        <ul>-->
-<!--                            &lt;!&ndash;                            <li&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                    v-for="(ingredient, i) in item.recipe&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                    .ingredientLines"&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                    :key="i"&ndash;&gt;-->
-<!--                            &lt;!&ndash;                            >&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                {{ ingredient }}&ndash;&gt;-->
-<!--                            &lt;!&ndash;                            </li>&ndash;&gt;-->
-<!--                        </ul>-->
-<!--                    </v-card-text>-->
-
                     <v-card-actions>
                         <v-btn color="green" dark @click="orderRecipe(item)"
                         >Order

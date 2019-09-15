@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -24,5 +25,8 @@ public class Event {
     private Address address;
     @OneToOne(cascade = CascadeType.ALL)
     private User organizer;
+    private String description;
+//    @OneToMany
+//    private List<User> participators;
     private AccesType accesType;
 }

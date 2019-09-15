@@ -1,8 +1,6 @@
 <template>
     <span>
         <home-hero></home-hero>
-        <home-details></home-details>
-        <home-plans></home-plans>
     </span>
 </template>
 

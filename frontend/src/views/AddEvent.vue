@@ -8,15 +8,23 @@
                     </v-toolbar>
                     <v-card-text>
                         <v-form ref="form" v-model="valid">
-
                             <v-text-field
-                                    name="eventName"
+                                    name="name"
                                     label="Event name"
-                                    type="eventName"
-                                    v-model="eventName"
+                                    type="text"
+                                    v-model="name"
                                     required
                             >
                             </v-text-field>
+
+                            <v-textarea
+                                    name="description"
+                                    label="Event Description"
+                                    type="text"
+                                    v-model="description"
+                                    required
+                            >
+                            </v-textarea>
 
                             <v-text-field
                                     name="date"
@@ -29,7 +37,7 @@
                             <v-text-field
                                     name="street"
                                     label="Street"
-                                    type="street"
+                                    type="text"
                                     v-model="street"
                                     required
                             >
@@ -56,7 +64,7 @@
                             <v-text-field
                                     name="city"
                                     label="City"
-                                    type="city"
+                                    type="text"
                                     v-model="city"
                                     required
                             >
@@ -65,22 +73,21 @@
                             <v-text-field
                                     name="zipCode"
                                     label="Zip Code"
-                                    type="zipCode"
+                                    type="text"
                                     v-model="zipCode"
                                     required
                             >
                             </v-text-field>
 
                             <v-select
-                                    ref="access"
-                                    v-model="access"
-                                    :rules="[() => !!access || 'This field is required']"
+                                    ref="accessType"
+                                    v-model="accessType"
+                                    :rules="[() => !!accessType || 'This field is required']"
                                     :items="accessTypeContent"
                                     label="Access"
                                     placeholder="Select..."
                                     required
                             ></v-select>
-
 
                         </v-form>
                     </v-card-text>
@@ -107,6 +114,7 @@
             return {
                 accessTypeContent: ['PUBLIC', 'PRIVATE'],
                 name: '',
+                description: '',
                 date: null,
                 street: '',
                 numberOfBuilding: null,
@@ -130,6 +138,7 @@
                     },
                     data: {
                         name: this.name,
+                        description: this.description,
                         date: this.date,
                         address: {
                             street: this.street,

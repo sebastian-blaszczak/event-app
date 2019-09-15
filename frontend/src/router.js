@@ -14,11 +14,6 @@ const router = new Router({
             component: Home
         },
         {
-            path: '/menu',
-            name: 'menu',
-            component: () => import('./views/Menu.vue')
-        },
-        {
             path: '/sign-in',
             name: 'signin',
             component: () => import('./views/Signin.vue')
@@ -47,24 +42,18 @@ const router = new Router({
                 requiresAuth: true
             }
         },
+        {
+            path: '/about',
+            name: 'about',
+            component: () => import('./views/About.vue'),
+            meta: {
+                requiresAuth: true
+            }
+        },
 
         // otherwise redirect to home
-        { path: '*', redirect: '/' }
+        {path: '*', redirect: '/'}
     ]
-});
-
-router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.authRequired)) {
-        if (!store.state.isAuthenticated) {
-            next({
-                path: '/sign-in'
-            });
-        } else {
-            next();
-        }
-    } else {
-        next();
-    }
 });
 
 export default router;

@@ -53,7 +53,7 @@
                                 :disabled="!valid"
                                 @click="submit"
                                 data-cy="signinSubmitBtn"
-                        >Sign up
+                        >Sign in
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -109,7 +109,7 @@
                     .catch(function (error) {
                         currentObj.output = error;
                     });
-                this.$router.push({name: 'user-events'})
+                this.$router.push({name: 'home'})
             }
         }
     };

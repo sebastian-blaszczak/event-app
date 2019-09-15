@@ -1,6 +1,7 @@
 <template>
-    <div>
-    </div>
+        <span>
+        <event><router-view :key="$route.fullPath"></router-view></event>
+    </span>
 </template>
 
 <script>
@@ -9,9 +10,7 @@
     export default {
         name: 'Events',
         components: {
-            Event
+            Event,
         }
     };
 </script>
-
-<style scoped></style>
