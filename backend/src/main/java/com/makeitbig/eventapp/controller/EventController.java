@@ -2,15 +2,15 @@ package com.makeitbig.eventapp.controller;
 
 import com.makeitbig.eventapp.exception.EventNotFoundException;
 import com.makeitbig.eventapp.model.Event;
-import com.makeitbig.eventapp.model.Participation;
 import com.makeitbig.eventapp.model.User;
 import com.makeitbig.eventapp.service.EventService;
 import com.makeitbig.eventapp.service.ParticipationService;
+import com.makeitbig.eventapp.service.UserService;
 import com.makeitbig.eventapp.wrapper.UserDetailsWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,19 +18,17 @@ import java.util.List;
 @CrossOrigin("*")
 public class EventController {
     private final EventService eventService;
-    private final ParticipationService participationService;
+    private final UserService userService;
 
-    public EventController(EventService eventService, ParticipationService participationService) {
+    public EventController(EventService eventService, ParticipationService participationService, UserService userService) {
         this.eventService = eventService;
-        this.participationService = participationService;
+
+        this.userService = userService;
     }
 
     @PostMapping("/add")
     public Event addEvent(@RequestBody Event event, Authentication authentication) {
-        User organizer = ((UserDetailsWrapper) authentication.getPrincipal()).getUser();
-        eventService.save(event, organizer.getUserName());
-        Participation participation = Participation.builder().event(event).user(organizer).approvalFromOrganizer(true).build();
-        participationService.saveParticipation(participation);
+        eventService.save(event, authentication);
         return event;
     }
 
@@ -54,24 +52,18 @@ public class EventController {
 
     @GetMapping()
     public List<Event> getEventsForLoggedUser(Authentication authentication) {
-        return eventService.getByUser(((UserDetailsWrapper) authentication.getPrincipal()).getUser().getId());
+        return eventService.getEventsByParticipatedUser(((UserDetailsWrapper) authentication.getPrincipal()).getUser());
     }
 
-//    @GetMapping("/not-participate")
-//    public List<Event> getEventsToParticipate(Authentication authentication) {
-//        return eventService.getEventsToParticipateByUserId(((UserDetailsWrapper) authentication.getPrincipal()).getUser().getId());
-//    }
     @GetMapping("/not-participate")
     public List<Event> getEventsToParticipate(Authentication authentication) {
-        return eventService.getByUserToParticipate(((UserDetailsWrapper) authentication.getPrincipal()).getUser().getId());
+        return eventService.getEventsToParticipateByUser(((UserDetailsWrapper) authentication.getPrincipal()).getUser());
     }
 
-//    @PostMapping("/participate")
-//    public Event participateToEvent(@RequestBody Long eventId, Authentication authentication) {
-//        User user = ((UserDetailsWrapper) authentication.getPrincipal()).getUser();
-//        Event event = eventService.getById(eventId).orElseThrow(() -> new EventNotFoundException("Event with id: " + eventId + " doesn't exist!"));
-//        event.getParticipators().add(user);
-//        eventService.save(event);
-//        return event;
-//    }
+    @PostMapping("/participate")
+    public Event participateToEvent(@RequestBody Long eventId, Authentication authentication) {
+        eventService.addParticipator(eventId, authentication);
+        Event event = eventService.getById(eventId).orElseThrow(() -> new EventNotFoundException("Event with id: " + eventId + " doesn't exist!"));
+        return event;
+    }
 }

@@ -4,7 +4,7 @@
             <v-flex xs12 sm8 md4>
                 <v-card class="elevation-12">
                     <v-toolbar dark color="orange darken-2">
-                        <v-toolbar-title>Sign in Form</v-toolbar-title>
+                        <v-toolbar-title>New Event</v-toolbar-title>
                     </v-toolbar>
                     <v-card-text>
                         <v-form ref="form" v-model="valid">
@@ -98,7 +98,7 @@
                                 :disabled="!valid"
                                 @click="submit"
                                 data-cy="signinSubmitBtn"
-                        >Sign up
+                        >Add event
                         </v-btn>
                     </v-card-actions>
                 </v-card>

@@ -1,5 +1,6 @@
 package com.makeitbig.eventapp.service;
 
+import com.makeitbig.eventapp.exception.EventNotFoundException;
 import com.makeitbig.eventapp.model.User;
 import com.makeitbig.eventapp.model.UserRole;
 import com.makeitbig.eventapp.repository.UserRepository;
@@ -35,5 +36,9 @@ public class UserService implements UserDetailsService {
         user.setUserRole(UserRole.USER);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    public User getUserById(Long userId){
+        return userRepository.findById(userId).orElse(null);
     }
 }

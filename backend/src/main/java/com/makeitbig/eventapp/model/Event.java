@@ -23,10 +23,10 @@ public class Event {
     private String name;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User organizer;
     private String description;
-//    @OneToMany
-//    private List<User> participators;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<User> participators;
     private AccesType accesType;
 }
