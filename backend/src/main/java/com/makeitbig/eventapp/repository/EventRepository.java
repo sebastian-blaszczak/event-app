@@ -13,6 +13,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByUser(long userId);
     @Query("select p.event from Participation p where not p.user.id = ?1")
     List<Event> findByUserToParticipate(long userId);
-//    @Query("select e from Event e where  e.participators.id = ?1")
-//    List<Event> getParticipatorsByEventId(long userId);
+    @Query("select e from Event e where ?1 member of e.participators")
+    List<Event> getEventsByParticipateUser(User user);
+    @Query("select e from Event e where not ?1 member of e.participators")
+    List<Event> getEventsToParticipateByUser(User user);
 }

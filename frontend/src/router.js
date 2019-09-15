@@ -32,7 +32,7 @@ const router = new Router({
             component: () => import('./views/Events.vue'),
             meta: {
                 requiresAuth: true
-            }
+            },
         },
         {
             path: '/user/events/add-event',
@@ -40,7 +40,7 @@ const router = new Router({
             component: () => import('./views/AddEvent.vue'),
             meta: {
                 requiresAuth: true
-            }
+            },
         },
         {
             path: '/about',

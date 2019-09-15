@@ -32,14 +32,6 @@
                     <h3>Organizer</h3>
                     {{event.organizer.nickName}}
                 </v-card-text>
-
-                <v-card-actions v-if="!isOrganizer(event.organizer.userName)">
-                    <v-btn
-                            color=success
-                            @click="participateToEvent(event.id)"
-                    >Join
-                    </v-btn>
-                </v-card-actions>
             </v-card>
         </v-layout>
         <v-layout row>
@@ -70,7 +62,7 @@
                     {{event.organizer.nickName}}
                 </v-card-text>
 
-                <v-card-actions v-if="!isOrganizer(event.organizer.userName)">
+                <v-card-actions v-if="!isParticipate(event.participators)">
                     <v-btn
                             color=success
                             @click="participateToEvent(event.id)"
@@ -97,9 +89,14 @@
                 this.$router.push({name: 'add-event'});
             },
 
-            isOrganizer(user) {
+            isParticipate(participators) {
                 const username = window.localStorage.getItem('username')
-                return username === user
+                for (let i = 0; i < participators.length; i++) {
+                    if(participators.userName == username){
+                        return true
+                    }
+                }
+                return false
             },
 
             participateToEvent(eventId) {
@@ -107,16 +104,16 @@
                 const password = window.localStorage.getItem('password')
 
                 this.axios.request({
-                    headers : {
-                        'Content-Type' : 'application/json'
+                    headers: {
+                        'Content-Type': 'application/json'
                     },
                     method: 'post',
-                    url: 'http://localhost:8098/user/participate',
+                    url: 'http://localhost:8098/user/events/participate',
                     auth: {
                         password: password,
                         username: username
                     },
-                    data : eventId
+                    data: eventId
                 })
             }
 

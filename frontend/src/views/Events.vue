@@ -1,6 +1,6 @@
 <template>
         <span>
-        <event><router-view :key="$route.fullPath"></router-view></event>
+        <event :key="$route.fullPath"></event>
     </span>
 </template>
 
